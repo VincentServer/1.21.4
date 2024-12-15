@@ -1,21 +1,15 @@
-# Versiones disponibles
-# forge, mohist, fabric, vanilla, paper
 
-# Puedes instalar mohist después de instalar forge desde el menú de gestionar
-# Puedes instalar paper después de instalar vanilla desde el menú de gestionar
-# Puedes instalar purpur después de ins1talar fabric desde el menú de gestionar
 
-# Regiones de ngrok
-# Código          Lugar
-#-----------      ---------------------------
-# ap	          Asia / Pacífico (Singapore)
-# au		      Australia (Sydney)
-# eu		      Europa (Frankfurt)
-# in		      India (Mumbai)
-# jp		      Japón (Tokyo)
-# sa		      Sudamérica (São Paulo)
-# us		      Estados unidos (Ohio)
-# us-cal-1	      Estados unidos (California)
+
+
+
+# ================
+# MSX LAUNCHER 1.0
+# ================
+# 1. Instala la extensión de Python
+# 2. Haz click al botón de arriba a la derecha (►)
+
+# Si no aparece el botón, reinicia la página o cambia de navegador.
 
 
 
@@ -30,34 +24,51 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+# =================================================
 # No toques nada de aquí para abajo, puedes dañarlo
-import requests,os,base64,glob,time
-if os.path.exists("servidor.py"):
-	os.remove("servidor.py")
-if not os.path.exists("./.gitignore"):
-	big = "L1B5dGhvbioNCi93b3JrX2FyZWEqDQovc2Vydmlkb3JfbWluZWNyYWZ0DQovbWluZWNyYWZ0X3NlcnZlcg0KL3NlcnZpZG9yX21pbmVjcmFmdF9vbGQNCi90YWlsc2NhbGUtY3MNCi90aGFub3MNCi9zZXJ2ZXJzDQovYmtkaXINCi92ZW5kb3INCmNvbXBvc2VyLioNCmNvbmZpZ3VyYXRpb24uanNvbg0KY29uZmlndXJhY2lvbi5qc29uDQoqLnR4dA0KKi5weWMNCioubXNwDQoqLm91dHB1dA=="
-	dec = base64.standard_b64decode(big).decode()
-	with open(".gitignore", 'w') as giti:
-		giti.write(dec)
-def download_latest_release(download_path='.'):
-	mirror = "https://elyxdev.github.io/latest"
-	pet = requests.get(mirror)
-	if pet.status_code == 200:
-		data = pet.json()
-		url = data.get('latest')
-		version = url.split("/")[-1]
-		if version in glob.glob("*.msp"):
-			return version
+# =================================================
+A='server.py'
+E=print
+import requests as F,os as B,base64 as D,glob as C,time
+if B.path.exists(A):B.remove(A)
+if not B.path.exists('./.gitignore'):
+	G='L3RhaWxzY2FsZS1jcw0KL3dvcmtfYXJlYSoNCmNvbXBvc2VyLioNCi9QeXRob24qDQoqLm91dHB1dA0KL01vZGdlc3QNCi90aGFub3MNCi92ZW5kb3INCi9ia2Rpcg0KKi50eHQNCioucHljDQoqLm1zcA0KKi5tc3gNCioucHk=';H=D.standard_b64decode(G).decode()
+	with open('.gitignore','w')as I:I.write(H)
+def J(download_path='.'):
+	D='*.msx';I='https://minecraft-sx.github.io/data/links.json';A=C.glob(D)
+	if len(A)>0:A=A[0]
+	else:A=''
+	try:
+		G=F.get(I)
+		if G.status_code==200:
+			J=G.json();H=J.get('latest');A=H.split('/')[-1]
+			if A in C.glob(D):return A
+			else:B.system('rm *.msx >> /dev/null 2>&1');E('Actualizando tu versión de MSX...');time.sleep(1.5)
+			K=B.path.join(download_path,A)
+			with open(K,'wb')as L:L.write(F.get(H).content)
+			return A
 		else:
-			os.system("rm *.msp")
-			print("Actualizando tu versión de MSP...")
-			time.sleep(1.5)
-		pathto = os.path.join(download_path, version)
-		with open(pathto, 'wb') as archivo:
-			archivo.write(requests.get(url).content)
-		return version
-flnm=download_latest_release()
-if flnm.split(".")[-1] == "msp":
-	os.system(f"chmod +x {flnm} && ./{flnm}")
-else:
-    os.system(f"python3 {flnm}")
+			E('Error al actualizar MSX')
+			if A in C.glob(D):return A
+	except Exception as M:
+		E(f"Error general: {M}")
+		if A in C.glob(D):return A
+def K():
+	A=J()
+	if A==None:return
+	if A.split('.')[-1]=='msx':B.system(f"chmod +x {A} && ./{A}")
+	else:B.system(f"python3 {A}")
+K()
